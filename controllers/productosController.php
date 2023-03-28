@@ -27,5 +27,20 @@
 
             return $respuesta;
         }
+        
+        /* ========================================
+        MOSTRAR PRODUCTOS
+        ===========================================*/
+
+        static public function ctrMostrarProductos($ordenar){
+
+            $tabla = "productos";
+
+            $respuesta = ModeloProductos::mdlMostrarProdcutos($tabla , $ordenar);
+            
+            return($respuesta);
+            
+        }
+
     }
 ?>

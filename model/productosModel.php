@@ -53,7 +53,23 @@ class ModeloProductos{
 		$stmt = null;
 
 	}
+	
+        /* ========================================
+        MOSTRAR PRODUCTOS
+        ===========================================*/
 
+	static public function mdlMostrarProdcutos($tabla, $ordenar){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY $ordenar DESC LIMIT 4");
+
+		$stmt -> execute();
+
+		return $stmt -> fetchAll();
+
+
+		$stmt = null;
+
+	}
 
 }
 ?>

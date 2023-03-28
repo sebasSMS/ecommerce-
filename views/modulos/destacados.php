@@ -18,6 +18,81 @@ BANNER
 
 </figure>
 
+<?php 
+	$titulosModulos = array("ARTÍCILOS GRATUITOS", "LO MÁS VENDIDO", "LO MÁS VISTO");
+
+	if($titulosModulos[0] == "ARTÍCILOS GRATUITOS" ){
+
+		$ordenar = "id";
+
+		$gratis = ControladorProductos::ctrMostrarProductos($ordenar);
+	
+	
+	}
+	if($titulosModulos[1] == "LO MÁS VENDIDO" ){
+
+		$ordenar = "ventas";
+
+		$ventas = ControladorProductos::ctrMostrarProductos($ordenar);
+	
+	
+	}
+	if($titulosModulos[2] == "LO MÁS VISTO" ){
+
+		$ordenar = "vistas";
+
+		$vistas = ControladorProductos::ctrMostrarProductos($ordenar);
+	
+	
+	}
+
+	$ordenar = "vistas";
+
+	$prodcutos = ControladorProductos::ctrMostrarProductos($ordenar);
+
+?>
+<?php
+	for ($i = 0; $i < count($titulosModulos); $i++) { 
+
+		echo '
+			<div class="container-fluid well well-sm barraProductos">
+
+			<div class="container">
+				
+				<div class="row">
+					
+					<div class="col-xs-12 organizarProductos">
+		
+						<div class="btn-group pull-right">
+		
+							<button type="button" class="btn btn-default btnGrid" id="btnGrid'.$i.'">
+								
+								<i class="fa fa-th" aria-hidden="true"></i>  
+		
+								<span class="col-xs-0 pull-right"> GRID</span>
+		
+							</button>
+		
+							<button type="button" class="btn btn-default btnList" id="btnList'.$i.'">
+								
+								<i class="fa fa-list" aria-hidden="true"></i> 
+		
+								<span class="col-xs-0 pull-right"> LIST</span>
+		
+							</button>
+							
+						</div>		
+		
+					</div>
+		
+				</div>
+		
+			</div>
+		
+		</div>
+			';
+	}
+?>
 <!--=====================================
 BARRA PRODUCTOS GRATIS
 ======================================-->
