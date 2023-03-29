@@ -9,6 +9,7 @@ SLIDESHOW
         ======================================-->
         <ul>
             <?php
+                $servidor = Ruta::ctrRutaServidor();
                 $slide = ControladorSlide::ctrMostrarSlide();
                 foreach ($slide as $key => $value) {	
 

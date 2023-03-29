@@ -32,15 +32,27 @@
         MOSTRAR PRODUCTOS
         ===========================================*/
 
-        static public function ctrMostrarProductos($ordenar){
+        static public function ctrMostrarProductos($ordenar,$item, $valor){
 
             $tabla = "productos";
 
-            $respuesta = ModeloProductos::mdlMostrarProdcutos($tabla , $ordenar);
+            $respuesta = ModeloProductos::mdlMostrarProductos($tabla, $ordenar, $item, $valor);
             
             return($respuesta);
             
+            
         }
+         /* ========================================
+        MOSTRAR INFOPRODUCTOS
+        ===========================================*/
 
+        static public function crtMostrarInfoProductos($item, $ruta){
+
+            $tabla = "productos";
+
+            $respuesta = ModeloProductos::mdlMostrarInfoProductos($tabla, $item, $ruta);
+            
+            return($respuesta);
+        }
     }
 ?>

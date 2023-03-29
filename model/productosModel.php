@@ -58,13 +58,44 @@ class ModeloProductos{
         MOSTRAR PRODUCTOS
         ===========================================*/
 
-	static public function mdlMostrarProdcutos($tabla, $ordenar){
+	static public function mdlMostrarProductos($tabla, $ordenar, $item, $valor){
 
-		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY $ordenar DESC LIMIT 4");
+		if($item != null){
+
+			$stmt = Conexion::conectar()->prepare("SELECT *FROM $tabla WHERE $item = :$item ORDER BY $ordenar DESC LIMIT 4");
+
+			$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();			
+		}else {
+			
+			$stmt = Conexion::conectar()->prepare("SELECT *FROM $tabla ORDER BY $ordenar DESC LIMIT 4");
+
+			$stmt -> execute();
+	
+			return $stmt -> fetchAll();
+	
+	
+			
+	
+		}
+		$stmt = null;
+
+	}
+	    /* ========================================
+        MOSTRAR INFOPRODUCTOS
+        ===========================================*/
+	static public function mdlMostrarInfoProductos($tabla, $item, $valor){
+
+		$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+		$stmt -> bindParam(":".$item, $valor, PDO::PARAM_STR);
 
 		$stmt -> execute();
 
-		return $stmt -> fetchAll();
+		return $stmt -> fetch();
 
 
 		$stmt = null;
