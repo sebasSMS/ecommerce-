@@ -1,6 +1,6 @@
 <?php
 	$servidor = Ruta::ctrRutaServidor();
-
+	$url = Ruta::ctrRuta();
 ?>
 <!--===================================
      TOP
@@ -62,7 +62,7 @@
 			
 			<div class="col-lg-3 col-md-3 col-sm-2 col-xs-12" id="logotipo">
 				
-				<a href="#">
+				<a href="<?php echo $url; ?>">
 						 
 					<img src="<?php echo $servidor .$social["logo"];  ?>" class="img-responsive">
 
@@ -155,7 +155,7 @@
                     echo'
                     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
                     <h4>
-                        <a href="'.$value["ruta"].'" class="pixelCategorias">'.$value["categoria"].'</a>
+                        <a href="'.$url.$value["ruta"].'" class="pixelCategorias">'.$value["categoria"].'</a>
                     </h4>
                     <hr>
                         <ul>';
@@ -164,7 +164,7 @@
 
                         $subcategorias = ControladorProductos::ctrMostrarSubcategorias($item, $valor);
                         foreach ($subcategorias as $key => $value){
-                            echo '<li><a href="'.$value["ruta"].'" class="pixelSubCategorias">'.$value["subcategoria"].'</a></li>';
+                            echo '<li><a href="'.$url.$value["ruta"].'" class="pixelSubCategorias">'.$value["subcategoria"].'</a></li>';
                         }
                         echo '
     

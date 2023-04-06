@@ -32,11 +32,11 @@
         MOSTRAR PRODUCTOS
         ===========================================*/
 
-        static public function ctrMostrarProductos($ordenar,$item, $valor){
+        static public function ctrMostrarProductos($ordenar, $item, $valor, $base, $tope, $modo){
 
             $tabla = "productos";
 
-            $respuesta = ModeloProductos::mdlMostrarProductos($tabla, $ordenar, $item, $valor);
+            $respuesta = ModeloProductos::mdlMostrarProductos($tabla, $ordenar, $item, $valor,$base, $tope, $modo);
             
             return($respuesta);
             
@@ -53,6 +53,30 @@
             $respuesta = ModeloProductos::mdlMostrarInfoProductos($tabla, $item, $ruta);
             
             return($respuesta);
+        }
+       /* ========================================
+        MOSTRAR INFOPRODUCTOS
+        ===========================================*/
+
+        static public function ctrListarProductos($ordenar, $item, $valor){
+
+            $tabla = "productos";
+
+            $respuesta = ModeloProductos::mdlListarProductos($tabla, $ordenar, $item, $valor);
+            
+            return $respuesta;
+        }
+         /* ========================================
+        MOSTRAR BANNER
+        ===========================================*/
+
+        static public function ctrMostrarBanner($ruta){
+
+            $tabla = "banner";
+
+            $respuesta = ModeloProductos::mdlMostrarbanner($tabla, $ruta);
+
+            return $respuesta;
         }
     }
 ?>

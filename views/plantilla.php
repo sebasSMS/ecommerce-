@@ -15,8 +15,10 @@
 	<title>Tienda Virtual</title>
 
 	<?php
+	 session_start();
 		$servidor = Ruta::ctrRutaServidor();
 		$icono = ControladorPlantilla::ctrEstiloPlantilla();
+		$url = Ruta::ctrRuta();
 
 		echo '<link rel="icon" href="http://localhost/backend/'.$icono["icono"].'">';
 
@@ -24,7 +26,7 @@
 		MANTENER LA RUTA FIJA DEL PROYECTO
 		=============================================*/
 		
-		$url = Ruta::ctrRuta();
+		
 
 	?>
 
@@ -59,106 +61,102 @@
 
 	<script src="<?php echo $url; ?>views/js/plugins/jquery.scrollUp.js"></script>
 
-	
-
-	
-
 </head>
 
 <body>
 
-<?php
-
-/*=============================================
-CABEZOTE
-=============================================*/
-
-include "modulos/cabezote.php";
-
-/*=============================================
-CONTENIDO DINÁMICO
-=============================================*/
-
-$rutas = array();
-$ruta = null;
-$infoProducto = null;
-
-if(isset($_GET["ruta"])){
-
-	$rutas = explode("/", $_GET["ruta"]);
-
-	$item = "ruta";
-	$valor =  $rutas[0];
+	<?php
 
 	/*=============================================
-	URL'S AMIGABLES DE CATEGORÍAS
+	CABEZOTE
 	=============================================*/
 
-	$rutaCategorias = ControladorProductos::ctrMostrarCategorias($item, $valor);
-
-	if (is_array($ruta)) {
-
-		if($rutas[0] == $rutaCategorias["ruta"]){
-
-			$ruta = $rutas[0];
-	
-		}
-	}
-	
+	include "modulos/cabezote.php";
 
 	/*=============================================
-	URL'S AMIGABLES DE SUBCATEGORÍAS
+	CONTENIDO DINÁMICO
 	=============================================*/
 
-	$rutaSubCategorias = ControladorProductos::ctrMostrarSubCategorias($item, $valor);
+	$rutas = array();
+	$ruta = null;
+	$infoProducto = null;
 
-	foreach ($rutaSubCategorias as $key => $value) {
+	if(isset($_GET["ruta"])){
+
+		$rutas = explode("/", $_GET["ruta"]);
+
+		$item = "ruta";
+		$valor = $rutas[0];
+
+		/*=============================================
+		URL'S AMIGABLES DE CATEGORÍAS
+		=============================================*/
+
+		$rutaCategorias = ControladorProductos::ctrMostrarCategorias($item, $valor);
+
+		if (is_array($rutaCategorias)) {
+
+			if($rutas[0] == $rutaCategorias["ruta"]){
+
+				$ruta = $rutas[0];
 		
-		if($rutas[0] == $value["ruta"]){
-
-			$ruta = $rutas[0];
-
+			}
 		}
-
-	}
-	/*=============================================
-	URL'S AMIGABLES DE PRODUCTOS
-	=============================================*/
-	$rutaProductos = ControladorProductos::crtMostrarInfoProductos($item, $valor);
-	
-	if (is_array($ruta)) {
-		if($rutas[0] == $rutaProductos["ruta"]){
-
-			$infoProducto = $rutas[0];
-
-		}
-	}
-
-	/*=============================================
-	LISTA BLANCA DE URL'S AMIGABLES
-	=============================================*/
-
-	if($ruta != null || $rutas[0] == "articulos-gratis" || $rutas[0] =="lo-mas-vendido" ||$rutas[0] == "articulos-gratis" 	
-	){
-
-		include "modulos/producto.php";
-
-	}if ($infoProducto != null)  {
 		
-		include "modulos/infoprodcuto.php";
+
+		/*=============================================
+		URL'S AMIGABLES DE SUBCATEGORÍAS
+		=============================================*/
+
+		$rutaSubCategorias = ControladorProductos::ctrMostrarSubCategorias($item, $valor);
+
+		foreach ($rutaSubCategorias as $key => $value) {
+			
+			if($rutas[0] == $value["ruta"]){
+
+				$ruta = $rutas[0];
+
+			}
+
+		}
+		/*=============================================
+		URL'S AMIGABLES DE PRODUCTOS
+		=============================================*/
+		$rutaProductos = ControladorProductos::crtMostrarInfoProductos($item, $valor);
+		
+		if (is_array($rutaProductos)) {
+			if($rutas[0] == $rutaProductos ["ruta"]){
+
+				$infoProducto = $rutas[0];
+
+			}
+		}
+
+		/*=============================================
+		LISTA BLANCA DE URL'S AMIGABLES
+		=============================================*/
+		
+		if($ruta != null || $rutas[0] == "articulos-gratis" || $rutas[0] =="lo-mas-vendido" ||$rutas[0] == "lo-mas-visto" 	){
+			
+			include "modulos/producto.php";
+
+		}else if ($infoProducto != null)  {
+			
+			include "modulos/infoproducto.php";
+		}else{
+
+			include "modulos/error404.php";
+		}
+		
 	}else{
+		
+		include "modulos/slide.php";
+		include "modulos/destacados.php";
 
-		include "modulos/error404.php";
 	}
-	
 
-}else{
-	include "modulos/slide.php";
-	include "modulos/destacados.php";
-
-}
-
-?>
+	?>
+	<input type="hidden" value="<?php $url; ?>" id="rutaOculta">
 	<!-- ===========================================
 	JAVASCRIPT PERSONALIZADA
 	================================================-->
