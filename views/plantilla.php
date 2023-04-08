@@ -143,6 +143,11 @@
 		}else if ($infoProducto != null)  {
 			
 			include "modulos/infoproducto.php";
+		}
+		else if ( $rutas[0] == "buscador" ) {
+
+			include "modulos/buscador.php";
+			
 		}else{
 
 			include "modulos/error404.php";
@@ -163,6 +168,7 @@
 	<script src="<?php echo $url; ?>views/js/cabezote.js"></script>
 	<script src="<?php echo $url; ?>views/js/plantilla.js"></script>
 	<script src="<?php echo $url; ?>views/js/slide.js"></script>
+	<script src="<?php echo $url; ?>views/js/buscador.js"></script>
 
 </body>
 </html>

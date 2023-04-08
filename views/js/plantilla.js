@@ -65,14 +65,16 @@ $(window).scroll(function(){
 	var scrollY = window.pageYOffset;
 
 	if(window.matchMedia("(min-width:768px)").matches){
+		if($("banner").html() != null){
 
-		if(scrollY < ($(".banner").offset().top)-150){
+			if(scrollY < ($(".banner").offset().top)-150){
 
-			$(".banner img").css({"margin-top":-scrollY/3+"px"})
+				$(".banner img").css({"margin-top":-scrollY/3+"px"})
 
-		}else{
+			}else{
 
-			scrollY = 0;
+				scrollY = 0;
+			}
 		}
 
 	}	
@@ -105,5 +107,16 @@ var url = window.location.href;
 
 var indice = url.split("/");
 
-$("#item"+indice.pop()).addClass("active")
+console.log( "indice", indice)
+
+var pagActual = indice[5]
+
+console.log( "pagActual", pagActual)
+if (isNaN(pagActual)) {
+	$("#item1").addClass("active")
+}
+
+$("#item"+pagActual).addClass("active")
+
+
 
