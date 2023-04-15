@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 	<meta charset="UTF-8">
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -26,18 +25,23 @@
 		MANTENER LA RUTA FIJA DEL PROYECTO
 		=============================================*/
 		
+		$url = Ruta::ctrRuta();
 		
 
 	?>
-
+	<!-- ===========================================
+	PLUGINS DE CSS
+	================================================-->
 	<link rel="stylesheet" href="<?php echo $url; ?>views/css/plugins/bootstrap.min.css">
 
 	<link rel="stylesheet" href="<?php echo $url; ?>views/css/plugins/font-awesome.min.css">
 
+	<link rel="stylesheet" href="<?php echo $url; ?>views/css/plugins/flexslider.css"> 
+
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-
+	
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Condensed" rel="stylesheet">
-
+	
 	<!-- ===========================================
 	HOJA DE ESTILO PERSONALISADAS
 	================================================-->
@@ -49,8 +53,11 @@
 	<link rel="stylesheet" href="<?php echo $url; ?>views/css/slide.css">
 
 	<link rel="stylesheet" href="<?php echo $url; ?>views/css/productos.css">
+	
+	<link rel="stylesheet" href="<?php echo $url; ?>views/css/infoProductos.css">
+
 	<!-- ===========================================
-	PLUGINS DE CSS
+	PLUGINS DE js
 	================================================-->
 
 	<script src="<?php echo $url; ?>views/js/plugins/jquery.min.js"></script>
@@ -60,6 +67,8 @@
 	<script src="<?php echo $url; ?>views/js/plugins/jquery.easing.js"></script>
 
 	<script src="<?php echo $url; ?>views/js/plugins/jquery.scrollUp.js"></script>
+
+	<script src="<?php echo $url; ?>views/js/plugins/jquery.flexslider.js"></script>
 
 </head>
 
@@ -169,6 +178,7 @@
 	<script src="<?php echo $url; ?>views/js/plantilla.js"></script>
 	<script src="<?php echo $url; ?>views/js/slide.js"></script>
 	<script src="<?php echo $url; ?>views/js/buscador.js"></script>
+	<script src="<?php echo $url; ?>views/js/infoProductos.js"></script>
 
 </body>
 </html>

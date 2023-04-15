@@ -109,7 +109,7 @@ LISTAR PRODUCTOS
 
 	<div class="container">
 		
-		<div class="row">
+		<div class="row botonesCompra">
 
 			<!--=====================================
 			BREADCRUMB O MIGAS DE PAN
@@ -145,8 +145,13 @@ LISTAR PRODUCTOS
 					}
 
 				}else{
+					if(isset($_SESSION["ordenar"])){
 
-					$modo = $_SESSION["ordenar"];
+						$modo = $_SESSION["ordenar"];
+					}else{
+						$modo = "DESC";
+					}
+					
 
 				}
                 
@@ -231,7 +236,7 @@ LISTAR PRODUCTOS
 
 							<figure>
 								
-								<a href="'.$value["ruta"].'" class="pixelProducto">
+								<a href="'.$url.$value["ruta"].'" class="pixelProducto">
 									
 									<img src="'.$servidor.$value["portada"].'" class="img-responsive">
 
@@ -245,7 +250,7 @@ LISTAR PRODUCTOS
 					
 								<small>
 									
-									<a href="'.$value["ruta"].'" class="pixelProducto">
+									<a href="'.$url.$value["ruta"].'" class="pixelProducto">
 										
 										'.$value["titulo"].'<br>
 
@@ -333,7 +338,7 @@ LISTAR PRODUCTOS
 
 									}
 
-									echo '<a href="'.$value["ruta"].'" class="pixelProducto">
+									echo '<a href="'.$url.$value["ruta"].'" class="pixelProducto">
 									
 										<button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Ver producto">
 											
@@ -362,7 +367,7 @@ LISTAR PRODUCTOS
 							   
 							<figure>
 						
-								<a href="'.$value["ruta"].'" class="pixelProducto">
+								<a href="'.$url.$value["ruta"].'" class="pixelProducto">
 									
 									<img src="'.$servidor.$value["portada"].'" class="img-responsive">
 
@@ -377,10 +382,7 @@ LISTAR PRODUCTOS
 							<h1>
 
 								<small>
-
-									<a href="'.$value["ruta"].'" class="pixelProducto">
-
-										<a href="'.$value["ruta"].'" class="pixelProducto">
+									<a href="'.$url.$value["ruta"].'" class="pixelProducto">
 										
 										'.$value["titulo"].'<br>';
 
@@ -462,7 +464,7 @@ LISTAR PRODUCTOS
 
 									}
 
-						  		echo '<a href="'.$value["ruta"].'" class="pixelProducto">
+						  		echo '<a href="'.$url.$value["ruta"].'" class="pixelProducto">
 
 							  		<button type="button" class="btn btn-default btn-xs" data-toggle="tooltip" title="Ver producto">
 
