@@ -37,6 +37,9 @@
 	<link rel="stylesheet" href="<?php echo $url; ?>views/css/plugins/font-awesome.min.css">
 
 	<link rel="stylesheet" href="<?php echo $url; ?>views/css/plugins/flexslider.css"> 
+	
+	<link rel="stylesheet" href="<?php echo $url; ?>views/css/plugins/sweetalert2.min.css"> 
+
 
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 	
@@ -65,6 +68,8 @@
 	<script src="<?php echo $url; ?>views/js/plugins/bootstrap.min.js"></script>
 
 	<script src="<?php echo $url; ?>views/js/plugins/jquery.easing.js"></script>
+
+	<script src="<?php echo $url; ?>views/js/plugins/sweetalert2.all.min.js"></script>
 
 	<script src="<?php echo $url; ?>views/js/plugins/jquery.scrollUp.js"></script>
 
@@ -179,6 +184,7 @@
 	<script src="<?php echo $url; ?>views/js/slide.js"></script>
 	<script src="<?php echo $url; ?>views/js/buscador.js"></script>
 	<script src="<?php echo $url; ?>views/js/infoProductos.js"></script>
+	<script src="<?php echo $url; ?>views/js/usuario.js"></script>
 
 </body>
 </html>

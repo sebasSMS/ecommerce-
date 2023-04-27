@@ -40,7 +40,7 @@
                 <ul>
                     <li><a href="#modalIngreso" data-toggle="modal">Ingresar</a></li>
 					<li>|</li>
-					<li><a href="#modalRegistro" data-toggle="modal">Crear una cuenta</a></li>
+					<li><a href="#modalRegistro" id="" data-toggle="modal">Crear una cuenta</a></li>
                 </ul>
             </div>
 
@@ -181,3 +181,123 @@
 	</div>
 
 </header>
+<!--=====================================
+VENTANA DE REGISTRO
+======================================-->
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal modalFormulario" id="modalRegistro">
+
+	<div class="modal-dialog modal-content">
+
+		<!-- Modal body -->
+		<div class="modal-body modalTitulo">
+			
+			<h3 class="backColor">REGISTRARSE</h3>
+
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+			<!--=====================================
+			REGISTRO FACEBOOK
+			======================================-->
+			<div class="col-sm-6 col-xs-12 facebook" id="btnFacebookRegistro">
+				<p>
+					<i class="fa fa-facebook" aria-hidden="true"></i>
+					Registro con Facebook
+				</p>
+			</div>
+			<!--=====================================
+			REGISTRO GOOGLE
+			======================================-->
+			<div class="col-sm-6 col-xs-12 google" id="btnGoogleRegistro">
+				<p>
+					<i class="fa fa-google" aria-hidden="true"></i>
+					Registro con Google
+				</p>
+			</div>
+			<!--=====================================
+			REGISTRO DIRECTO
+			======================================-->
+
+			<form method="post" onsubmit=" return registroUsuario()">
+				<hr>
+					<div class="form-group">
+
+						<div class="input-group">
+
+							<span class="input-group-addon">
+								
+								<i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+								
+							</span>
+							<input type="text"  class="form-control text-uppercase " id="regUsuario" name="regUsuario" placeholder="Nombre Completo">
+						</div>
+						
+					</div>
+
+					<div class="form-group">
+
+						<div class="input-group">
+
+							<span class="input-group-addon">
+								
+								<i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+								
+							</span>
+							<input type="email"  class="form-control " id="reEmail" name="reEmail" placeholder="Correo Electrónico">
+						</div>
+					</div>
+					<div class="form-group">
+
+						<div class="input-group">
+
+							<span class="input-group-addon">
+								
+								<i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
+								
+							</span>
+							<input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="Contraseña">
+						</div>
+					</div>
+
+					<!-- =====================================
+					https://www.iubenda.com/es/ CONDICIONES DE USO Y POLITICAS DE PRIVACIDAD
+					=========================================== -->
+					<div class="checkBox">
+
+						<label >
+							<input id="regPoliticas" type="checkbox" name="">
+
+								<small>
+
+									Acepta nuestras codiciones de uso y polílicas
+									<a  href="https://www.iubenda.com/privacy-policy/28923001" class="iubenda-white no-brand iubenda-noiframe 
+									iubenda-embed iubenda-noiframe " title="Codiciones de uso y polílicas ">Leer más </a><script type="text/javascript">
+									(function (w,d) {var loader = function () {var s = d.createElement("script"),tag = d.getElementsByTagName("script")
+									[0];s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener)
+									{w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload",
+									loader);}else{w.onload = loader;}})(window, document);</script>
+
+								</small>
+						</label>
+					</div>
+
+					<?php
+						$registro = new ControladorUsuarios();
+						$registro -> crtRegsitroUsuarios(); 
+					?>
+
+					<input type="submit" class="bnt btn-defaulf backColor btn-block" value="ENVIAR">					
+			</form>
+
+		</div>
+		<!-- Modal footer -->
+		<div class="modal-footer">
+			¿Ya tienes una cuenta registrada? | <strong> <a href="#modalIngreso"
+			data-dismiss="modal" data-toggle="modal">Ingresar</a></strong>
+		</div>
+
+	</div>
+</div>
