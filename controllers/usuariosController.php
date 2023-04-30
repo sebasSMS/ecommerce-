@@ -12,23 +12,22 @@ use PHPMailer\PHPMailer\Exception;
     REGISTRO DE USUARIO
     =============================================*/
 
-    public function crtRegsitroUsuarios(){
+    public function crtRegistroUsuarios(){
 
         if(isset($_POST["regUsuario"])){
 
             if(preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["regUsuario"]) &&
                 preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["reEmail"]) &&
-                preg_match('/^[a-zA-Z0-9]+$/', $_POST["rePassword"])){
+                preg_match('/^[a-zA-Z0-9]+$/', $_POST["regPassword"])){
 
-                    $encriptar = crypt($_POST["rePassword"],'$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+                    $encriptar = crypt($_POST["regPassword"],'$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
                     $encriptarEmail = md5($_POST["reEmail"]);
-                    var_dump($encriptarEmail);
 
                     $datos = array("nombre"=> $_POST["regUsuario"],
                                    "password"=> $encriptar,
                                    "email"=> $_POST["reEmail"],
-                                   "modo" => "Directory",
+                                   "modo" => "directo",
                                    "verificacion" => 1,
                                    "emailEncriptado" => $encriptarEmail);
 
@@ -115,42 +114,39 @@ use PHPMailer\PHPMailer\Exception;
 
                                 echo '<script> 
 
-                                    swal.fire({
-                                        icon:"error",
+                                    Swal.fire({
                                         title: "¡ERROR!",
                                         text: "¡Ha ocurrido un problema enviando verificación de correo electrónico a '.$_POST["reEmail"].$mail->ErrorInfo.'!",
-                                        confirmButtonText: "Cerrar",
-                                        closeOnConfirm: false
-                                        },
-
-                                        function(isConfirm){
-
-                                            if(isConfirm){
-                                                history.back();
-                                            }
-                                    });
+                                        icon: "error",
+                                        timerProgressBar:true,
+                                        timer:9000,
+                                        showCancelButton: false,
+                                        confirmButtonText: "Ok!"
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            history.back()
+                                        }
+                                    })
 
                                 </script>';
 
                             }else{
 
                                 echo '<script> 
+                                Swal.fire({
 
-                                    swal.fire({
-                                        icon:"success",
-                                        title: "¡OK!",
-                                        text: "¡Por favor revise la bandeja de entrada o la carpeta de SPAM de su correo electrónico '.$_POST["reEmail"].' para verificar la cuenta!",
-
-                                        confirmButtonText: "Cerrar",
-                                        closeOnConfirm: false
-                                        },
-
-                                        function(isConfirm){
-
-                                            if(isConfirm){
-                                                history.back();
-                                            }
-                                    });
+                                    title: "ok!",
+                                    text: "¡Por favor revise la bandeja de entrada o la carpeta de SPAM de su correo electrónico '.$_POST["reEmail"].' para verificar la cuenta!",
+                                    icon: "success",
+                                    timerProgressBar:true,
+                                    timer:9000,
+                                    showCancelButton: false,
+                                    confirmButtonText: "Ok!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        history.back()
+                                    }
+                                })
 
                                 </script>';
 
@@ -160,7 +156,6 @@ use PHPMailer\PHPMailer\Exception;
                         } catch (Exception $e) {
                             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                         }
-                        var_dump($envio);
 
                     }
 
@@ -190,5 +185,140 @@ use PHPMailer\PHPMailer\Exception;
         }
 
     }
+
+    /*=============================================
+    VERIFICACIÓN CORREO ELECTRÓNICO
+    =============================================*/
+
+    static public function ctrMostrarUsuarios($item, $valor){
+
+        $tabla = "usuarios";
+
+        $respuesta = ModelUsuarios::mdlMostrarUsuarios($tabla, $item, $valor); 
+        
+        return $respuesta;
+
+    }
+    /*=============================================
+    ACTUALIZAR USUARIO 
+    =============================================*/
+
+    static public function ctrActualizarUsuarios($id, $item, $valor){
+
+        $tabla = "usuarios";
+
+        $respuesta = ModelUsuarios::mdlActualizarUsuarios($tabla, $id, $item, $valor); 
+        
+        return $respuesta;
+
+    }
+
+    /*=============================================
+    INGRESO USUARIO
+    =============================================*/
+
+    public function crtIngresoUsuarios(){
+
+        if(isset($_POST["ingEmail"])){
+
+
+            if(preg_match('/^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["ingEmail"]) &&
+                preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingPassword"])){
+
+
+                    $encriptar = crypt($_POST["ingPassword"],'$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+                    $tabla = "usuarios";
+                    $item = "email";
+                    $valor = $_POST["ingEmail"];
+        
+                    $respuesta = ModelUsuarios::mdlMostrarUsuarios($tabla, $item, $valor);
+                    var_dump( $respuesta["verificacion"]);
+
+                    if($respuesta["email"] == $_POST["ingEmail"] && $respuesta["password"] == $encriptar){
+
+
+                        if($respuesta["verificacion"] == 1){
+
+                            
+                            echo'<script>
+
+                                Swal.fire({
+                                    title: "NO HA VERIFICADO SU CORREO ELETRÓNICO!",
+                                    text: "¡Por favor revise la bandeja de entrada o la carpeta de SPAM de su correo para verificar la direccion de correo electrónico '.$respuesta["email"].'!",
+                                    icon: "error",
+                                    showCancelButton: false,
+                                    confirmButtonText: "Ok!"
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location = localStorage.getItem("rutaActual")
+                                    }
+                                })
+                        
+                                </script>';
+
+                        }else{
+
+                            $_SESSION["validarSesion"] = "ok";
+                            $_SESSION["id"] = $respuesta["id"];
+                            $_SESSION["nombre"] = $respuesta["nombre"];
+                            $_SESSION["foto"] = $respuesta["foto"];
+                            $_SESSION["email"] = $respuesta["email"];
+                            $_SESSION["password"] = $respuesta["password"];
+                            $_SESSION["modo"] = $respuesta["modo"];
+
+                            echo' <script>
+
+                                window.location = localStorage.getItem("rutaActual")
+
+                            </script>';
+                        }
+
+
+                    }else{
+
+                        echo '<script> 
+
+                        Swal.fire({
+                            title: "¡ERROR!",
+                            text: "¡Por favor revise que el email exista o la contraseña coincida con la registrada!",
+                            icon: "error",
+                            showCancelButton: false,
+                            confirmButtonText: "Ok"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location = localStorage.getItem("rutaActual")
+                            }
+                        })
+
+                    </script>';
+                    }
+
+
+                }else{
+
+                    echo'<script>
+                    Swal.fire({
+                        icon: "error",
+                        title: "¡ERROR!",
+                        text: "¡Error al ingresar al sistema, no se permiten caracteres especiales!",
+                        confirmButtonText: "Cerrar",
+                        closeOnConfirm: false
+                        },
+                    
+                        function(isConfirm){
+                            
+                            if(isConfirm){
+                                history.back();
+                            }
+                        
+                    })
+                    </script>';
+                }
+
+
+        }
+    }
+
  }
 ?>

@@ -38,9 +38,46 @@
             ======================================= -->
             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12 registro">
                 <ul>
-                    <li><a href="#modalIngreso" data-toggle="modal">Ingresar</a></li>
-					<li>|</li>
-					<li><a href="#modalRegistro" id="" data-toggle="modal">Crear una cuenta</a></li>
+
+					<?php
+
+						if(isset($_SESSION["validarSesion"])){
+
+							if($_SESSION["modo"] == "directo") {
+
+								if ($_SESSION["foto"] == "foto") {
+
+									echo'
+									<li>
+										<img class="img-circle" src="'.$url.$_SESSION["foto"].'" width="70%" >
+									</li>';
+									
+								}else{
+									
+									echo '<li> 
+											<img class="img-circle" src="'.$servidor.'vistas/img/usuarios/default/anonymous.png" width="10%"" 
+										</li>';
+	
+								}
+
+								echo'
+								<li>|</li>
+								<li><a href="'.$url.'perfil">Ver Perfil</a></li>
+								<li>|</li>
+								<li><a href="'.$url.'salir">Salir</a></li>
+								';
+
+								
+							}
+						}else{
+							echo '
+							<li><a href="#modalIngreso" data-toggle="modal">Ingresar</a></li>
+							<li>|</li>
+							<li><a href="#modalRegistro" id="" data-toggle="modal">Crear una cuenta</a></li>
+							';
+						}
+					?>
+
                 </ul>
             </div>
 
@@ -246,7 +283,7 @@ VENTANA DE REGISTRO
 								<i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
 								
 							</span>
-							<input type="email"  class="form-control " id="reEmail" name="reEmail" placeholder="Correo Electrónico">
+							<input type="email"  class="form-control validarEmail" id="reEmail" name="reEmail" placeholder="Correo Electrónico">
 						</div>
 					</div>
 					<div class="form-group">
@@ -258,7 +295,7 @@ VENTANA DE REGISTRO
 								<i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
 								
 							</span>
-							<input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="Contraseña">
+							<input type="password" class="form-control" id="regPassword" name="regPassword" placeholder="Contraseña">
 						</div>
 					</div>
 
@@ -286,7 +323,7 @@ VENTANA DE REGISTRO
 
 					<?php
 						$registro = new ControladorUsuarios();
-						$registro -> crtRegsitroUsuarios(); 
+						$registro -> crtRegistroUsuarios(); 
 					?>
 
 					<input type="submit" class="bnt btn-defaulf backColor btn-block" value="ENVIAR">					
@@ -297,6 +334,91 @@ VENTANA DE REGISTRO
 		<div class="modal-footer">
 			¿Ya tienes una cuenta registrada? | <strong> <a href="#modalIngreso"
 			data-dismiss="modal" data-toggle="modal">Ingresar</a></strong>
+		</div>
+
+	</div>
+</div>
+
+<!--=====================================
+VENTANA MODAL PARA EL INGRESO
+======================================-->
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal modalFormulario" id="modalIngreso">
+
+	<div class="modal-dialog modal-content">
+
+		<!-- Modal body -->
+		<div class="modal-body modalTitulo">
+			
+			<h3 class="backColor">INGRESAR</h3>
+
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+			<!--=====================================
+			INGRESO FACEBOOK
+			======================================-->
+			<div class="col-sm-6 col-xs-12 facebook" id="btnFacebookRegistro">
+				<p>
+					<i class="fa fa-facebook" aria-hidden="true"></i>
+					Registro con Facebook
+				</p>
+			</div>
+			<!--=====================================
+			REGISTRO GOOGLE
+			======================================-->
+			<div class="col-sm-6 col-xs-12 google" id="btnGoogleRegistro">
+				<p>
+					<i class="fa fa-google" aria-hidden="true"></i>
+					Registro con Google
+				</p>
+			</div>
+			<!--=====================================
+			INGRESO DIRECTO
+			======================================-->
+
+			<form method="post">
+				<hr>
+					<div class="form-group">
+
+						<div class="input-group">
+
+							<span class="input-group-addon">
+								
+								<i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+								
+							</span>
+							<input type="email"  class="form-control validarEmail" id="ingEmail" name="ingEmail" placeholder="Correo Electrónico">
+						</div>
+					</div>
+					<div class="form-group">
+
+						<div class="input-group">
+
+							<span class="input-group-addon">
+								
+								<i class="glyphicon glyphicon-lock" aria-hidden="true"></i>
+								
+							</span>
+							<input type="password" class="form-control" id="ingPassword" name="ingPassword" placeholder="Contraseña">
+						</div>
+					</div>
+
+					<?php
+						$ingreso = new ControladorUsuarios();
+						$ingreso -> crtIngresoUsuarios(); 
+					?>
+
+					<input type="submit" class="bnt btn-defaulf backColor btn-block btnIngreso"  value="ENVIAR">						
+			</form>
+
+		</div>
+		<!-- Modal footer -->
+		<div class="modal-footer">
+			¿No tienes una cuenta registrada? | <strong> <a href="#modalRegistro"
+			data-dismiss="modal" data-toggle="modal">Registrarse</a></strong>
 		</div>
 
 	</div>

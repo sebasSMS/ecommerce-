@@ -158,9 +158,9 @@
 			
 			include "modulos/infoproducto.php";
 		}
-		else if ( $rutas[0] == "buscador" ) {
+		else if ( $rutas[0] == "buscador" || $rutas[0] == "verificar" ) {
 
-			include "modulos/buscador.php";
+			include "modulos/".$rutas[0].".php";
 			
 		}else{
 

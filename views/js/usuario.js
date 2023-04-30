@@ -1,4 +1,72 @@
 /*=============================================
+FORMATER LOS IPUNT
+=============================================*/
+var rutaActual = location.href
+
+$(".btnIngreso").click(function(){
+
+    localStorage.setItem("rutaActual", rutaActual);
+    
+
+})
+/*=============================================
+FORMATER LOS IPUNT
+=============================================*/
+
+$("input").focus(function(){
+
+    $(".alert").remove();
+    
+})
+
+/*=============================================
+VALIDAR EMAIL REPETIDO
+=============================================*/
+
+    var validarEMailRepetido = false;
+
+    $("#reEmail").change(function(){
+
+        var email = $("#reEmail").val();
+
+        var datos = new FormData();
+        datos.append("validarEmail", email);
+
+        $.ajax({
+
+            url:rutaOculta+"ajax/usuarios.ajax.php",
+            method: "POST",
+            data: datos,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(respuesta){
+
+                if(respuesta == "false"){
+
+                    $(".alert").remove();
+                    validarEMailRepetido = false;
+
+
+                }else{
+
+                   var modo = JSON.parse(respuesta).modo;
+
+                    if(modo == "directo"){
+                        
+                        modo= "esta página"
+                    }
+
+                    $("#reEmail").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong>El correo electrónico ya existe en la base de datos, fue registrado a través de '+modo+' por favor ingrse otro diferente</div>')
+
+                    validarEMailRepetido = true
+                }
+            }
+
+        })
+    })
+
+/*=============================================
 VALIDAR EL REGISTRO DE USUSARIO
 =============================================*/
 function registroUsuario(){
@@ -35,6 +103,12 @@ function registroUsuario(){
 
             $("#reEmail").parent().before('<div class="alert alert-warning"><strong>ERROR:</strong> Escriba correctamente el formulario</div>')
         
+            return false; 
+        }
+
+        if(validarEMailRepetido){
+
+            $("#reEmail").parent().before('<div class="alert alert-danger"><strong>ERROR:</strong>El correo electrónico ya existe en la base de datos, por favor ingrse otro diferente</div>')
             return false; 
         }
 
