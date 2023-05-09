@@ -3,7 +3,7 @@ FORMATER LOS IPUNT
 =============================================*/
 var rutaActual = location.href
 
-$(".btnIngreso").click(function(){
+$(".btnIngreso, .facebook").click(function(){
 
     localStorage.setItem("rutaActual", rutaActual);
     

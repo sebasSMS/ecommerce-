@@ -6,6 +6,7 @@
             ================================================== */
         static public function ctrRuta(){
             return "http://localhost/frontend/";
+            
         }
             /* ===============================================
                 RUTA LADO DE SERVIDOR   

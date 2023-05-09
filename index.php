@@ -16,6 +16,7 @@
     require_once 'extensiones/PHPMailer/Exception.php';
     require_once 'extensiones/PHPMailer/PHPMailer.php';
     require_once 'extensiones/PHPMailer/SMTP.php';
+    require_once 'extensiones/vendor/autoload.php';
 
     $plantilla = new ControladorPlantilla();
     $plantilla -> plantilla();

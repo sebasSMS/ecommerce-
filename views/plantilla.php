@@ -158,7 +158,7 @@
 			
 			include "modulos/infoproducto.php";
 		}
-		else if ( $rutas[0] == "buscador" || $rutas[0] == "verificar" ) {
+		else if ( $rutas[0] == "buscador" || $rutas[0] == "verificar" || $rutas[0] == "salir") {
 
 			include "modulos/".$rutas[0].".php";
 			
@@ -185,6 +185,29 @@
 	<script src="<?php echo $url; ?>views/js/buscador.js"></script>
 	<script src="<?php echo $url; ?>views/js/infoProductos.js"></script>
 	<script src="<?php echo $url; ?>views/js/usuario.js"></script>
+	<script src="<?php echo $url; ?>views/js/registroFacebook.js"></script>
+	
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '741573911086669',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v16.0'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 
 </body>
 </html>

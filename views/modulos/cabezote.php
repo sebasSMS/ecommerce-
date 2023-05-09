@@ -1,6 +1,69 @@
 <?php
 	$servidor = Ruta::ctrRutaServidor();
 	$url = Ruta::ctrRuta();
+
+	/* ===================================
+     CREAR EL OBJETO DE LA API GOOGLE
+	=======================================  */
+	$cliente = new Google_Client();
+	$cliente->setAuthConfig('model/client_secret.json');
+	$cliente->setAccessType("offline");
+	$cliente->setScopes(['profile','email']);
+	
+	/* ===================================
+     RUTA PARA EL LIGIN DE GOOGLE
+	=======================================  */
+
+	$rutaGoogle = $cliente->createAuthUrl();
+	/* ===================================
+     RECIBIMOS LA VARIABLE GET DE GOOGLE LLAMADA DE CODE
+	=======================================  */
+
+	if(isset($_GET['code'])){
+		 
+		
+		$token = $cliente-> authenticate($_GET['code']);
+		$_SESSION['id_token_google'] = $token;
+		$cliente->setAccessToken($token);	
+	}
+	/* ===================================
+     RECIBIMOS LOS DATOS CIFRADOS DE GOOGLE EN EL ARRAY
+	=======================================  */
+
+	if($cliente->getAccessToken()){
+
+		$item = $cliente->verifyIdToken();
+		
+
+		$datos = array("nombre"=> $item["name"],
+						"email"=> $item["email"],
+						"foto"=> $item["picture"],
+						"password"=> "null",
+						"modo"=>"google",
+						"verificacion"=> 0,
+						"emailEncriptado"=> "null"
+					);
+
+		$respuesta = ControladorUsuarios::crtRegistroRedesSociales($datos);
+
+			echo '
+			<script>
+				setTimeout(function(){
+
+					window.location = localStorage.getItem("rutaActual")
+				
+				},1000)
+			</script>
+			';
+		
+
+	}
+
+	
+
+
+
+
 ?>
 <!--===================================
      TOP
@@ -59,16 +122,48 @@
 										</li>';
 	
 								}
-
 								echo'
 								<li>|</li>
 								<li><a href="'.$url.'perfil">Ver Perfil</a></li>
 								<li>|</li>
-								<li><a href="'.$url.'salir">Salir</a></li>
+								<li><a  href="'.$url.'salir" class "salir" >Salir</a></li>
 								';
 
 								
 							}
+							
+							if($_SESSION["modo"] == "facebook") {
+
+								echo '
+								<li>
+									<img class="img-circle" src="'.$_SESSION["foto"].'" width="10%" >
+								</li>
+
+									
+								<li>|</li>
+								<li><a href="'.$url.'perfil">Ver Perfil</a></li>
+								<li>|</li>
+								<li><a  href="'.$url.'salir" class "salir" >Salir</a></li>
+								';
+							}
+
+							if($_SESSION["modo"] == "google") {
+
+								echo '
+								<li>
+									<img class="img-circle" src="'.$_SESSION["foto"].'" width="10%" >
+								</li>
+
+									
+								<li>|</li>
+								<li><a href="'.$url.'perfil">Ver Perfil</a></li>
+								<li>|</li>
+								<li><a  href="'.$url.'salir"  >Salir</a></li>
+								';
+							}
+
+							
+							
 						}else{
 							echo '
 							<li><a href="#modalIngreso" data-toggle="modal">Ingresar</a></li>
@@ -239,7 +334,7 @@ VENTANA DE REGISTRO
 			<!--=====================================
 			REGISTRO FACEBOOK
 			======================================-->
-			<div class="col-sm-6 col-xs-12 facebook" id="btnFacebookRegistro">
+			<div class="col-sm-6 col-xs-12 facebook">
 				<p>
 					<i class="fa fa-facebook" aria-hidden="true"></i>
 					Registro con Facebook
@@ -248,12 +343,16 @@ VENTANA DE REGISTRO
 			<!--=====================================
 			REGISTRO GOOGLE
 			======================================-->
-			<div class="col-sm-6 col-xs-12 google" id="btnGoogleRegistro">
-				<p>
-					<i class="fa fa-google" aria-hidden="true"></i>
-					Registro con Google
-				</p>
-			</div>
+			<a href="<?php echo $rutaGoogle; ?>">
+				<div class="col-sm-6 col-xs-12 google" >
+					<p>
+						<i class="fa fa-google" aria-hidden="true"></i>
+						Registro con Google
+					</p>
+				</div>
+			</a>
+			
+			
 			<!--=====================================
 			REGISTRO DIRECTO
 			======================================-->
@@ -360,21 +459,24 @@ VENTANA MODAL PARA EL INGRESO
 			<!--=====================================
 			INGRESO FACEBOOK
 			======================================-->
-			<div class="col-sm-6 col-xs-12 facebook" id="btnFacebookRegistro">
+			<div class="col-sm-6 col-xs-12 facebook" >
 				<p>
 					<i class="fa fa-facebook" aria-hidden="true"></i>
-					Registro con Facebook
+					Ingreso con Facebook
 				</p>
 			</div>
 			<!--=====================================
-			REGISTRO GOOGLE
+			INGRESO GOOGLE
 			======================================-->
-			<div class="col-sm-6 col-xs-12 google" id="btnGoogleRegistro">
-				<p>
-					<i class="fa fa-google" aria-hidden="true"></i>
-					Registro con Google
-				</p>
-			</div>
+			<a href="<?php echo $rutaGoogle; ?>">
+				<div class="col-sm-6 col-xs-12 google">
+					<p>
+						<i class="fa fa-google" aria-hidden="true"></i>
+						Ingreso con Google
+					</p>
+				</div>
+			</a>
+			
 			<!--=====================================
 			INGRESO DIRECTO
 			======================================-->
@@ -411,8 +513,83 @@ VENTANA MODAL PARA EL INGRESO
 						$ingreso -> crtIngresoUsuarios(); 
 					?>
 
-					<input type="submit" class="bnt btn-defaulf backColor btn-block btnIngreso"  value="ENVIAR">						
+					<input type="submit" class="bnt btn-defaulf backColor btn-block btnIngreso"  value="ENVIAR">		
+					
+					<br>
+
+					<center>
+						<a href="#modalPassword" data-dismiss="modal" data-toggle="modal">¿Olvidaste tu contraseña?</a>
+					</center>
 			</form>
+			
+
+		</div>
+		<!-- Modal footer -->
+		<div class="modal-footer">
+			¿No tienes una cuenta registrada? | <strong> <a href="#modalRegistro"
+			data-dismiss="modal" data-toggle="modal">Registrarse</a></strong>
+		</div>
+
+	</div>
+</div>
+
+<!--=====================================
+VENTANA MODAL PARA OLVODO DE CONTRASEÑA
+======================================-->
+<!-- Button to Open the Modal -->
+
+
+<!-- The Modal -->
+<div class="modal modalFormulario" id="modalPassword">
+
+	<div class="modal-dialog modal-content">
+
+		<!-- Modal body -->
+		<div class="modal-body modalTitulo">
+			
+			<h3 class="backColor">SOLICITUD DE NUEVA CONTRASEÑA</h3>
+
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+
+			<!--=====================================
+			OLVIDO CONTRASEÑA
+			======================================-->
+
+			<form method="post">
+			<label class=" text-muted">
+				<br>
+				Escribe el correo electronico con el que estas registrado y allì te enviaremos 
+				una nueva contraseña:</label>
+
+					<div class="form-group">
+
+						<div class="input-group">
+
+							<span class="input-group-addon">
+								
+								<i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+								
+							</span>
+
+							<input type="email"  class="form-control validarEmail" id="passEmail" name="passEmail" placeholder="Correo Electrónico">
+						</div>
+					</div>
+
+					<?php
+						$password = new ControladorUsuarios();
+						$password -> crtOlvidoPassword();  
+					?>
+
+					<input type="submit" class="bnt btn-defaulf backColor btn-block "  value="ENVIAR">		
+					
+					<br>
+
+					<center>
+						<a href="#modalPassword" data-dismiss="modal" data-toggle="modal">¿Olvidaste tu contraseña?</a>
+					</center>
+			</form>
+			
 
 		</div>
 		<!-- Modal footer -->
